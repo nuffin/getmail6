@@ -58,6 +58,7 @@ except ImportError as o:
 log = logging.Logger()
 log.addhandler(sys.stdout, logging.INFO, maxlevel=logging.INFO)
 log.addhandler(sys.stderr, logging.WARNING)
+# log.addhandler(sys.stderr, logging.DEBUG)
 
 def blurb():
     log.info('getmail version %s\n' % __version__)
@@ -113,6 +114,7 @@ options_defaults = {
     'to_oldmail_on_each_mail' : False,
     'skip_imap_fetch_size' : False,
     'mark_read': False,
+    'debug_level': 0,
 }
 
 
@@ -656,6 +658,11 @@ If no flag is given "\Seen" is assumed.
             dest='override_mark_read', action='store_true',
             help='mark read after retrieve (synonym to `-ds,`)'
         )
+        overrides.add_option(
+            '-D', '--debug-level',
+            dest='override_debug_level', action='count',
+            help='debug protocol of retriever (may be given multiple times)'
+        )
         parser.add_option_group(overrides)
 
         parser.add_option(
@@ -914,6 +921,8 @@ If no flag is given "\Seen" is assumed.
                     if netrc_auth and netrc_auth[2]:
                         retriever_args['password'] = netrc_auth[2]
 
+                if options.override_debug_level is not None:
+                    retriever_args['debug_level'] = options.override_debug_level
                 log.debug('    instantiating retriever %s with args %s\n'
                           % (retriever_type, format_params(retriever_args)))
 

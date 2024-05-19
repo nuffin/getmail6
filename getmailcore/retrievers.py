@@ -68,6 +68,7 @@ class SimplePOP3Retriever(POP3RetrieverBase, POP3initMixIn):
         ConfTupleOfStrings(name='password_command', required=False, default=()),
         ConfBool(name='use_apop', required=False, default=False),
         ConfBool(name='delete_dup_msgids', required=False, default=False),
+        ConfInt(name='debug_level', required=False, default=0),
     )
     received_from = None
     received_with = 'POP3'
@@ -109,6 +110,7 @@ class SimplePOP3SSLRetriever(POP3RetrieverBase, POP3SSLinitMixIn):
         ConfString(name='ssl_version', required=False, default=None),
         ConfString(name='ssl_ciphers', required=False, default=None),
         ConfString(name='ssl_cert_hostname', required=False, default=None),
+        ConfInt(name='debug_level', required=False, default=0),
     )
     received_from = None
     received_with = 'POP3-SSL'
@@ -249,6 +251,7 @@ class MultidropPOP3Retriever(MultidropPOP3RetrieverBase, POP3initMixIn):
         ConfTupleOfStrings(name='password_command', required=False, default=()),
         ConfBool(name='use_apop', required=False, default=False),
         ConfString(name='envelope_recipient'),
+        ConfInt(name='debug_level', required=False, default=0),
     )
     received_from = None
     received_with = 'POP3'
@@ -290,6 +293,7 @@ class MultidropPOP3SSLRetriever(MultidropPOP3RetrieverBase, POP3SSLinitMixIn):
         ConfString(name='ssl_version', required=False, default=None),
         ConfString(name='ssl_ciphers', required=False, default=None),
         ConfString(name='ssl_cert_hostname', required=False, default=None),
+        ConfInt(name='debug_level', required=False, default=0),
     )
     received_from = None
     received_with = 'POP3-SSL'
@@ -395,6 +399,7 @@ class SimpleIMAPRetriever(IMAPRetrieverBase, IMAPinitMixIn):
         ConfString(name='imap_search', required=False, default=None),
         ConfString(name='imap_on_delete', required=False, default=None),
         ConfBool(name='imap_id_extension', required=False, default=False),
+        ConfInt(name='debug_level', required=False, default=0),
     )
     received_from = None
     received_with = 'IMAP4'
@@ -449,6 +454,7 @@ class SimpleIMAPSSLRetriever(IMAPRetrieverBase, IMAPSSLinitMixIn):
         ConfString(name='imap_search', required=False, default=None),
         ConfString(name='imap_on_delete', required=False, default=None),
         ConfBool(name='imap_id_extension', required=False, default=False),
+        ConfInt(name='debug_level', required=False, default=0),
     )
     received_from = None
     received_with = 'IMAP4-SSL'
@@ -495,6 +501,7 @@ class MultidropIMAPRetriever(MultidropIMAPRetrieverBase, IMAPinitMixIn):
         ConfString(name='imap_search', required=False, default=None),
         ConfString(name='imap_on_delete', required=False, default=None),
         ConfBool(name='imap_id_extension', required=False, default=False),
+        ConfInt(name='debug_level', required=False, default=0),
     )
     received_from = None
     received_with = 'IMAP4'
@@ -550,6 +557,7 @@ class MultidropIMAPSSLRetriever(MultidropIMAPRetrieverBase, IMAPSSLinitMixIn):
         ConfString(name='imap_search', required=False, default=None),
         ConfString(name='imap_on_delete', required=False, default=None),
         ConfBool(name='imap_id_extension', required=False, default=False),
+        ConfInt(name='debug_level', required=False, default=0),
     )
     received_from = None
     received_with = 'IMAP4-SSL'
