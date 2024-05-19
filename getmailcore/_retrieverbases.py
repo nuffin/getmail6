@@ -830,6 +830,16 @@ class RetrieverSkeleton(ConfigurableBase):
         self.supports_idle = False
         self.supports_id = False
         ConfigurableBase.__init__(self, **args)
+        self.debug_level = self.conf['debug_level']
+
+    def set_debuglevel(self, level):
+        pass
+
+    def start_debug(self, level=None):
+        self.set_debuglevel(level or self.debug_level)
+
+    def stop_debug(self):
+        self.set_debuglevel(0)
 
     def set_new_timestamp(self):
         self.timestamp = int(time.time())
@@ -1071,6 +1081,11 @@ class POP3RetrieverBase(RetrieverSkeleton):
         RetrieverSkeleton.__init__(self, **args)
         self.log.trace()
 
+    def set_debuglevel(self, level):
+        self.debug_level = level
+        if self.conn:
+            self.conn.set_debuglevel = self.debug_level
+
     def select_mailbox(self, mailbox):
         assert mailbox is None, (
             'POP does not support mailbox selection (%s)' % mailbox
@@ -1216,6 +1231,7 @@ class POP3RetrieverBase(RetrieverSkeleton):
         RetrieverSkeleton.initialize(self, options)
         try:
             self._connect()
+            self.start_debug()
 
             if self.conf['use_apop']:
                 self.conn.apop(self.conf['username'],
@@ -1340,6 +1356,11 @@ class IMAPRetrieverBase(RetrieverSkeleton):
         self.gss_step = 0
         self.gss_vc = None
         self.gssapi = False
+
+    def set_debuglevel(self, level):
+        self.debug_level = level
+        if self.conn:
+            self.conn.debug = self.debug_level
 
     def _clear_state(self):
         RetrieverSkeleton._clear_state(self)
@@ -1808,6 +1829,7 @@ class IMAPRetrieverBase(RetrieverSkeleton):
         try:
             self.log.trace('trying self._connect()' + os.linesep)
             self._connect()
+            self.start_debug()
             try:
                 self.log.trace('logging in' + os.linesep)
                 if self.conf['use_kerberos'] and HAVE_KERBEROS_GSS:
